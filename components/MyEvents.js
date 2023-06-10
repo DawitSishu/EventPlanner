@@ -7,44 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useIsFocused } from '@react-navigation/native';
 import UpdateEvent from './UpdateEvent';
 
-const styles = StyleSheet.create({
-  
-    eventItem: {
-      backgroundColor: '#f9f9f9',
-      borderRadius: 8,
-      padding: 16,
-      marginBottom: 16,
-    },
-    eventName: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      marginBottom: 8,
-    },
-    eventDetails: {
-      marginBottom: 8,
-    },
-    buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-    },
-    editButton: {
-      backgroundColor: '#2196F3',
-      borderRadius: 4,
-      paddingVertical: 8,
-      paddingHorizontal: 16,
-      marginRight: 8,
-    },
-    deleteButton: {
-      backgroundColor: '#FF0000',
-      borderRadius: 4,
-      paddingVertical: 8,
-      paddingHorizontal: 16,
-    },
-    buttonText: {
-      color: '#FFFFFF',
-      fontWeight: 'bold',
-    },
-  });
   
 const EventListScreen = ({route}) => {
     const firestore = getFirestore(app);
@@ -117,21 +79,6 @@ const EventListScreen = ({route}) => {
       // alert error
       console.error('Error retrieving document:', error);
     }
-    // try {
-    //   // Update the document fields using the 'updateDoc' method
-    //   await updateDoc(eventRef, {
-    //     eventName: 'Updated Event Name',
-    //     eventDate: '2023-06-15',
-    //     eventTime: '18:00',
-    //     eventLocation: 'muchasa n',
-    //     eventDescription: 'Updated Event Description',
-    //   });
-  
-    //   console.log('Event updated successfully');
-    // fetchEventsFromFirestore();
-    // } catch (error) {
-    //   console.error('Error updating event:', error);
-    // }
   };
 
   const handleDeleteEvent = async (eventId) => {
@@ -148,28 +95,7 @@ const EventListScreen = ({route}) => {
       console.error('Error deleting event:', error);
     }
   };
-
-
-  const renderEventItem = ({ item }) => {
-    return (
-          <View style={styles.eventItem} key={item.id}>
-            <Text style={styles.eventName}>{item.eventName}</Text>
-            <Text style={styles.eventDetails}>Date: {item.eventDate}</Text>
-            <Text style={styles.eventDetails}>Time: {item.eventTime}</Text>
-            <Text style={styles.eventDetails}>Location: {item.eventLocation}</Text>
-            <Text style={styles.eventDetails}>Description: {item.eventDescription}</Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.editButton} onPress={() => handleEditEvent(item.id)}>
-                <Text style={styles.buttonText}>Edit</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.deleteButton} onPress={() => confirmDeleteEvent(item.id)}>
-                <Text style={styles.buttonText}>Delete</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-    );
-  };
-
+  
   const confirmDeleteEvent = (eventId) => {
     Alert.alert(
       'Confirm Delete',
@@ -189,21 +115,95 @@ const EventListScreen = ({route}) => {
     );
   };
 
+  const displayIt  = (event) =>{
+    navigation.navigate('DisplayItem',event);
+  }
+
+  const renderEventItem = ({ item }) => {
+    return (
+      <TouchableOpacity onPress={()=>{displayIt(item)}}>
+      <View style={styles.container}>
+          <View style={styles.eventItem} key={item.id}>
+            <Text style={styles.eventName}>{item.eventName}</Text>
+            <Text style={styles.eventDetails}>Date: {item.eventDate}</Text>
+            <Text style={styles.eventDetails}>Time: {item.eventTime}</Text>
+            <Text style={styles.eventDetails}>Location: {item.eventLocation}</Text>
+            <Text style={styles.eventDetails}>Description: {item.eventDescription}</Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.editButton} onPress={() => handleEditEvent(item.id)}>
+                <Text style={styles.buttonText}>Edit</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.deleteButton} onPress={() => confirmDeleteEvent(item.id)}>
+                <Text style={styles.buttonText}>Delete</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+      </View>   
+      </TouchableOpacity> 
+    );
+  };
+
+
   return (
-    <View style={styles.container}>
-      {loader ? (
+   loader ? (
+         <View style={styles.container}>
             <ActivityIndicator size="large" color="blue" />
-            ) :  (
+          </View>  
+            ) :  ( 
             <FlatList
               data={events}
               renderItem={renderEventItem}
               keyExtractor={(item) => item.id}
             />
-            )}
-    </View>
+            )
   );
-
-  
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    width:'100%',
+  },
+    eventItem: {
+      backgroundColor: '#f9f9f9',
+      borderRadius: 8,
+      padding: 16,
+      // marginBottom: 16,
+      marginTop: 16,
+      width:'100%'
+    },
+    eventName: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 8,
+    },
+    eventDetails: {
+      marginBottom: 8,
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+    },
+    editButton: {
+      backgroundColor: '#2196F3',
+      borderRadius: 4,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      marginRight: 8,
+    },
+    deleteButton: {
+      backgroundColor: '#FF0000',
+      borderRadius: 4,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+    },
+    buttonText: {
+      color: '#FFFFFF',
+      fontWeight: 'bold',
+    },
+  });
 
 export default EventListScreen;

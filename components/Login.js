@@ -3,6 +3,8 @@ import { View, TextInput, Button, ActivityIndicator,StyleSheet,Alert } from 'rea
 import { useNavigation } from '@react-navigation/native';
 import {  TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const LoginScreen = ({ route }) => {
   const { firebaseConfig } = route.params;
@@ -18,6 +20,10 @@ const LoginScreen = ({ route }) => {
 
 
   const handleEmailLogin = async () => {
+    if(!email || !password){
+      Alert.alert('Log-In Error', 'ALl Fields Are Mandatory!!');
+      return
+    }
     try {
       setLoading(true);
       const response = await fetch(
@@ -60,6 +66,10 @@ const LoginScreen = ({ route }) => {
                   <ActivityIndicator size="large" color="blue" />
               </View>
            )  : (
+            <LinearGradient
+                colors = {['#450101','#090130']}
+                       style={styles.gradient}
+                        >
               <View style={styles.container}>
               <Text style={styles.title}>Welcome Back!</Text>
               <View style={styles.inputContainer}>
@@ -90,6 +100,7 @@ const LoginScreen = ({ route }) => {
                 <Text style={styles.signupText}>Don't have an account? Sign up</Text>
               </TouchableOpacity>
             </View>
+            </LinearGradient>
            )
        
   );
@@ -100,14 +111,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
     paddingHorizontal: 40,
+    width:'100%',
+  },
+  gradient: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 40,
-    color: '#333',
+    color: 'white',
   },
   inputContainer: {
     width: '100%',
@@ -117,17 +134,21 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+    color:'white'
   },
   input: {
     flex: 1,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: 'white',
     marginBottom: 15,
     paddingHorizontal: 20,
     fontSize: 16,
-    color: '#333',
+    color: 'white',
   },
+  
   button: {
     width: '100%',
     height: 50,
@@ -143,7 +164,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   signupText: {
-    color: '#333',
+    color: 'white',
     fontSize: 14,
     textDecorationLine: 'underline',
   },

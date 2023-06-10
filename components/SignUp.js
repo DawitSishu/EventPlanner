@@ -3,6 +3,7 @@ import { View, TextInput, ActivityIndicator,StyleSheet, Alert } from 'react-nati
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {  TouchableOpacity, Text } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 
@@ -15,11 +16,19 @@ const SignupScreen = ({ route }) => {
     const [displayName,setDisplayName] = useState('');
     const navigation = useNavigation();
 
+
+   
+
+
     const goLogIn = () =>{
         navigation.navigate('Login');
     }
 
   const handleSignup = async () => {
+    if(!email || !password || !displayName || !confirmPassword){
+      Alert.alert('Sign-Up Error', 'ALl Fields Are Mandatory!!');
+      return
+    }
     try {
         setLoading(true);
         if (password !== confirmPassword) {
@@ -67,11 +76,17 @@ const SignupScreen = ({ route }) => {
                 <ActivityIndicator size="large" color="blue" />
               </View>
             )   : (
+              
+                <LinearGradient
+                colors = {['#450101','#090130']}
+                       style={styles.gradient}
+                        >
               <View style={styles.container}>
                 <Text style={styles.title}>Create A New Account!</Text>
                 <View style={styles.inputContainer}>
                 <Icon name="user" size={20} color="#aaa" style={styles.icon} />
                      <TextInput
+                        placeholderTextColor="white"
                         placeholder="Name"
                         value={displayName}
                         onChangeText={setDisplayName}
@@ -82,6 +97,7 @@ const SignupScreen = ({ route }) => {
                 <Icon name="envelope" size={20} color="#aaa" style={styles.icon} />
                     <TextInput
                         placeholder="Email"
+                        placeholderTextColor="white"
                         value={email}
                         onChangeText={setEmail}
                         style={styles.input}
@@ -90,6 +106,7 @@ const SignupScreen = ({ route }) => {
                 <View style={styles.inputContainer}>
                 <Icon name="lock" size={20} color="#aaa" style={styles.icon} />
                     <TextInput
+                        placeholderTextColor="white"
                         placeholder="Password"
                         value={password}
                         onChangeText={setPassword}
@@ -102,20 +119,22 @@ const SignupScreen = ({ route }) => {
                     <TextInput
                         style={styles.input}
                         secureTextEntry
+                        placeholderTextColor="white"
                         placeholder="Confirm Password"
+                        underlineColorAndroid="transparent"
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
                       />
               </View>
               <TouchableOpacity style={styles.button} onPress={handleSignup} >
-                <Text style={styles.buttonText}>Create Accout</Text>
+                <Text style={styles.buttonText}>Create Account</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={goLogIn}>
                 <Text style={styles.signupText}>Already have an account? log In</Text>
               </TouchableOpacity>
-            {/* <Button title="Sign-Up" onPress={handleSignup} /> */}
-            {/* <Button title="Log-In" onPress={goLogIn} /> */}
+      
             </View>
+            </LinearGradient>
             )
           
   );
@@ -126,14 +145,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
     paddingHorizontal: 40,
+    width:'100%'
+  },
+  gradient: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 40,
-    color: '#333',
+    color: 'white',
   },
   inputContainer: {
     width: '100%',
@@ -143,17 +168,21 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+    color:'white'
   },
   input: {
     flex: 1,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: 'white',
     marginBottom: 15,
     paddingHorizontal: 20,
     fontSize: 16,
-    color: '#333',
+    color: 'white',
   },
+  
   button: {
     width: '100%',
     height: 50,
@@ -169,7 +198,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   signupText: {
-    color: '#333',
+    color: 'white',
     fontSize: 14,
     textDecorationLine: 'underline',
   },
