@@ -8,12 +8,7 @@ import { useIsFocused } from '@react-navigation/native';
 import UpdateEvent from './UpdateEvent';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
+  
     eventItem: {
       backgroundColor: '#f9f9f9',
       borderRadius: 8,

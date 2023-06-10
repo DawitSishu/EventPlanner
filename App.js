@@ -14,29 +14,35 @@ const Stack = createStackNavigator();
 export default  function App  () {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen 
-          name="Login" 
-          component={Login} 
-          initialParams={{ firebaseConfig }}
+      <Stack.Navigator 
+        initialRouteName="Login" 
+        // screenOptions={{
+        //   headerShown: false,
+        // }}
+        screenOptions={{ headerMode: 'none' }}
+      >
+          <Stack.Screen 
+            name="Login" 
+            component={Login} 
+            initialParams={{ firebaseConfig }}
+            />
+            <Stack.Screen 
+            name="CreateEvent" 
+            component={CreateEvent}
+            />
+            <Stack.Screen 
+            name="MyEvents" 
+            component={MyEvents}
+            />
+          <Stack.Screen
+            name="Signup"
+            component={SignUp}
+            initialParams={{ firebaseConfig }}
           />
           <Stack.Screen 
-          name="CreateEvent" 
-          component={CreateEvent}
-          />
-          <Stack.Screen 
-          name="MyEvents" 
-          component={MyEvents}
-          />
-        <Stack.Screen
-          name="Signup"
-          component={SignUp}
-          initialParams={{ firebaseConfig }}
-        />
-         <Stack.Screen 
-          name="UpdateEvent" 
-          component={UpdateEvent} 
-          />
+            name="UpdateEvent" 
+            component={UpdateEvent} 
+            />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -34,6 +34,7 @@ export default function UpdateEvent ({route}) {
           });
           //alert msg
           console.log('Event updated successfully');
+          setLoader(false);
           navigation.goBack();
         // fetchEventsFromFirestore();
         } catch (error) {
@@ -97,12 +98,10 @@ export default function UpdateEvent ({route}) {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-      },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
   input: {
     height: 40,
     borderColor: 'gray',

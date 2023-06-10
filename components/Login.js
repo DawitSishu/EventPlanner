@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, ActivityIndicator,StyleSheet,Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import {  TouchableOpacity, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const LoginScreen = ({ route }) => {
   const { firebaseConfig } = route.params;
@@ -54,50 +55,104 @@ const LoginScreen = ({ route }) => {
 
 
   return (
-    <View style={styles.container}>
-
-      {loading ? (
-            <ActivityIndicator size="large" color="blue" />
+      loading ? (
+                <View style={styles.container}>
+                  <ActivityIndicator size="large" color="blue" />
+              </View>
            )  : (
-            <>
-            <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
-      <Button title="Log-In" onPress={handleEmailLogin} />
-      <Button title="Sign-Up" onPress={goSignIn} />
-      </>
+              <View style={styles.container}>
+              <Text style={styles.title}>Welcome Back!</Text>
+              <View style={styles.inputContainer}>
+                <Icon name="user" size={20} color="#aaa" style={styles.icon} />
+                <TextInput
+                  style={styles.input}
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder="Email"
+                  placeholderTextColor="#aaa"
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Icon name="lock" size={20} color="#aaa" style={styles.icon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  placeholderTextColor="#aaa"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                />
+              </View>
+              <TouchableOpacity style={styles.button} onPress={handleEmailLogin} >
+                <Text style={styles.buttonText}>Login</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={goSignIn}>
+                <Text style={styles.signupText}>Don't have an account? Sign up</Text>
+              </TouchableOpacity>
+            </View>
            )
-       }
-      
-    </View>
+       
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingHorizontal: 20,
-    },
-    input: {
-      width: '100%',
-      height: 40,
-      borderWidth: 1,
-      borderColor: 'gray',
-      marginBottom: 20,
-      paddingHorizontal: 10,
-    },
-  });
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingHorizontal: 40,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 40,
+    color: '#333',
+  },
+  inputContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#f2f2f2',
+    marginBottom: 15,
+    paddingHorizontal: 20,
+    fontSize: 16,
+    color: '#333',
+  },
+  button: {
+    width: '100%',
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#ff3366',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  forgotPasswordText: {
+    color: '#888',
+    fontSize: 14,
+    marginBottom: 15,
+    textDecorationLine: 'underline',
+  },
+  signupText: {
+    color: '#333',
+    fontSize: 14,
+    textDecorationLine: 'underline',
+  },
+});
   
 export default LoginScreen;
