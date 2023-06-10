@@ -63,7 +63,7 @@ const LoginScreen = ({ route }) => {
               <View style={styles.container}>
               <Text style={styles.title}>Welcome Back!</Text>
               <View style={styles.inputContainer}>
-                <Icon name="user" size={20} color="#aaa" style={styles.icon} />
+                <Icon name="envelope" size={20} color="#aaa" style={styles.icon} />
                 <TextInput
                   style={styles.input}
                   value={email}
@@ -141,12 +141,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  forgotPasswordText: {
-    color: '#888',
-    fontSize: 14,
-    marginBottom: 15,
-    textDecorationLine: 'underline',
   },
   signupText: {
     color: '#333',

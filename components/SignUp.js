@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, ActivityIndicator,StyleSheet, Alert } from 'react-native';
+import { View, TextInput, ActivityIndicator,StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {  TouchableOpacity, Text } from 'react-native';
 
 
 
@@ -59,24 +61,34 @@ const SignupScreen = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-        {loading ? (
-            <ActivityIndicator size="large" color="blue" />
+    
+        loading ? (
+              <View style={styles.container}>
+                <ActivityIndicator size="large" color="blue" />
+              </View>
             )   : (
-                <>
+              <View style={styles.container}>
+                <Text style={styles.title}>Create A New Account!</Text>
+                <View style={styles.inputContainer}>
+                <Icon name="user" size={20} color="#aaa" style={styles.icon} />
                      <TextInput
                         placeholder="Name"
                         value={displayName}
                         onChangeText={setDisplayName}
                         style={styles.input}
                         />
+                </View>
+                <View style={styles.inputContainer}>
+                <Icon name="envelope" size={20} color="#aaa" style={styles.icon} />
                     <TextInput
                         placeholder="Email"
                         value={email}
                         onChangeText={setEmail}
                         style={styles.input}
                     />
-                    
+                </View>
+                <View style={styles.inputContainer}>
+                <Icon name="lock" size={20} color="#aaa" style={styles.icon} />
                     <TextInput
                         placeholder="Password"
                         value={password}
@@ -84,20 +96,28 @@ const SignupScreen = ({ route }) => {
                         secureTextEntry
                         style={styles.input}
                     />
+                </View>
+                <View style={styles.inputContainer}>
+                <Icon name="check-circle" size={20} color="#aaa" style={styles.icon} />
                     <TextInput
                         style={styles.input}
                         secureTextEntry
                         placeholder="Confirm Password"
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
-      />
-      <Button title="Sign-Up" onPress={handleSignup} />
-      <Button title="Log-In" onPress={goLogIn} />
-                </>
+                      />
+              </View>
+              <TouchableOpacity style={styles.button} onPress={handleSignup} >
+                <Text style={styles.buttonText}>Create Accout</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={goLogIn}>
+                <Text style={styles.signupText}>Already have an account? log In</Text>
+              </TouchableOpacity>
+            {/* <Button title="Sign-Up" onPress={handleSignup} /> */}
+            {/* <Button title="Log-In" onPress={goLogIn} /> */}
+            </View>
             )
-        }
-       
-    </View>
+          
   );
 };
 
@@ -106,15 +126,52 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    backgroundColor: '#fff',
+    paddingHorizontal: 40,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 40,
+    color: '#333',
+  },
+  inputContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  icon: {
+    marginRight: 10,
   },
   input: {
+    flex: 1,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#f2f2f2',
+    marginBottom: 15,
+    paddingHorizontal: 20,
+    fontSize: 16,
+    color: '#333',
+  },
+  button: {
     width: '100%',
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'gray',
-    marginBottom: 20,
-    paddingHorizontal: 10,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#ff3366',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  signupText: {
+    color: '#333',
+    fontSize: 14,
+    textDecorationLine: 'underline',
   },
 });
 
