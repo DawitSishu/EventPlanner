@@ -5,7 +5,6 @@ import {app} from '../config/firebaseConfig';
 import { getFirestore } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { useIsFocused } from '@react-navigation/native';
-import UpdateEvent from './UpdateEvent';
 
   
 const EventListScreen = ({route}) => {

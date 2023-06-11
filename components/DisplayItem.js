@@ -16,15 +16,17 @@ export default function DisplayItem  ({route}) {
             </ImageBackground>
             </View>
             <View style={styles.container}>
-                <View>
-                    <Text >Date: {event.eventDate}</Text>
-                    <Text >Time: {event.eventTime}</Text>
+                <View style={styles.date}>
+                    <Text style={styles.contentText}>Date: {event.eventDate}</Text>
+                    <Text style={styles.contentText}>Time: {event.eventTime}</Text>
                 </View>
-                <View>
-                    <Text style={styles.eventDetails}>Location: {event.eventLocation}</Text>
+                <View style={styles.location}>
+                    <Text style={styles.contentText}>Location: </Text>
+                    <Text style={styles.contentText}>{event.eventLocation}</Text>
                 </View>
-                <View>
-                    <Text style={styles.eventDetails}>Description: {event.eventDescription}</Text>
+                <View style={styles.description}>
+                        <Text>Description: </Text>
+                        <Text>{event.eventDescription}</Text>
                 </View>
             </View>
         </View>
@@ -35,10 +37,10 @@ const styles = StyleSheet.create({
      image :{
         // flex:1,
         width: '100%', 
-        height: '60%',
+        height: '70%',
      },
       text: {
-        marginTop:'55%',
+        marginTop:'85%',
         color: 'white',
         fontSize: 30,
         fontWeight:'bold'
@@ -48,26 +50,47 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        // paddingHorizontal: 15,
+        paddingHorizontal: 15,
         width:'100%',
+        height: '100%',
+      },
+      contentText: {
+        fontSize: 16,
+        fontWeight:'bold'
       },
       date:{
+        width:'100%',
         height: 50,
         borderRadius: 15,
+        padding: 10,
         flexDirection: 'row',
+        justifyContent:'space-between',
         alignItems: 'center',
         backgroundColor: 'transparent',
         borderWidth: 1,
         borderColor: 'gray',
-        marginBottom: 15,
+        marginTop: 30,
+        marginBottom: 25,
       },
-      eventDetails: {
-        backgroundColor: '#f9f9f9',
-    //   borderRadius: 8,
-      padding: 16,
-      // marginBottom: 16,
-    //   marginTop: 16,
-      width:'100%'
-        // marginBottom: 8,
+      location: {
+        width:'100%',
+        height: 50,
+        backgroundColor: 'transparent',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        borderRadius: 15,
+        borderWidth: 1,
+        borderColor: 'gray',
+        padding: 10,
+        marginBottom: 25,
       },
+      description:{
+        width:'100%',
+        // height:'100%',
+        borderRadius: 15,
+        borderWidth: 1,
+        borderColor: 'gray',
+        marginHorizontal: 15,
+        alignSelf:'stretch'
+      }
 });
