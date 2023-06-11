@@ -53,7 +53,7 @@ export default function App({route}) {
       value: new Date(),
       onChange:onTimeChange,
       mode: 'time',
-      is24Hour: false,
+      is24Hour: true,
     });
   };
 
@@ -104,7 +104,6 @@ export default function App({route}) {
                 <Text style={styles.Header}>Welcome: {user.displayName}</Text>
                   <Text style={styles.title} >Create Event</Text>
                   <View style={styles.inputContainer}>
-                    
                     <TextInput
                       style={styles.input}
                       placeholder="Event Name"
@@ -143,7 +142,7 @@ export default function App({route}) {
                       multiline
                     />
                     </View>
-                    <TouchableOpacity style={{...styles.button,backgroundColor: '#63954a'}} onPress={handleEventCreation} >
+              <TouchableOpacity style={{...styles.button,backgroundColor: '#63954a'}} onPress={handleEventCreation} >
                 <Text style={styles.buttonText}>Create Event</Text>
               </TouchableOpacity>
               <TouchableOpacity style={{...styles.button,backgroundColor: '#4b5a6b'}} onPress={showMyEvents} >

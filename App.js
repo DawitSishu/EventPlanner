@@ -38,9 +38,9 @@ export default  function App  () {
               initialParams={{ firebaseConfig }}
             />
             </Stack.Group>
-            <Stack.Group
+            {/* <Stack.Group
     // screenOptions={{ headerStyle: { backgroundColor: 'transparent' } }}
-  >
+  > */}
             <Stack.Screen 
             name="CreateEvent" 
             component={CreateEvent}
@@ -52,18 +52,37 @@ export default  function App  () {
               ),
             })}
             />
-            </Stack.Group>
+            {/* </Stack.Group> */}
             <Stack.Screen 
             name="MyEvents" 
             component={MyEvents}
+            options={({ navigation }) => ({
+              title: 'Events',
+              headerRight: () => (
+                <DrawerButton  />
+              ),
+            })}
             />
             <Stack.Screen
               name="DisplayItem"
               component={DisplayItem}
+              options={({ navigation }) => ({
+                title: 'Event',
+                headerRight: () => (
+                  <DrawerButton  />
+                ),
+              })}
             />
           <Stack.Screen 
             name="UpdateEvent" 
             component={UpdateEvent} 
+            options={({ navigation }) => ({
+              title: 'Update Event',
+              headerLeft: () =>{},
+              headerRight: () => (
+                <DrawerButton  />
+              ),
+            })}
             />
       </Stack.Navigator>
     </NavigationContainer>
