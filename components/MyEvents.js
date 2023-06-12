@@ -149,7 +149,7 @@ const EventListScreen = ({route}) => {
             />
             ) : (
               <View style={styles.container}>
-                <Image  source={noEvent} style={{margin: 70}}/>
+                <Image  source={noEvent} style={{marginBottom: 70}}/>
                 <Text style={styles.eventName}>You Have no Events Please Create One</Text>
               </View>
             )
