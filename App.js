@@ -8,7 +8,12 @@ import MyEvents from './components/MyEvents';
 import UpdateEvent from './components/UpdateEvent';
 import {firebaseConfig} from './config/firebaseConfig';
 import DrawerButton from './components/DrawerButton';
-import DisplayItem from './components/DisplayItem'
+import DisplayItem from './components/DisplayItem';
+import { Alert,TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Ionicons } from '@expo/vector-icons';
+
+
 
 
 
@@ -18,11 +23,7 @@ export default  function App  () {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Login" 
-        // screenOptions={{
-        //   headerShown: false,
-        // }}
-        // screenOptions={{ headerMode: 'none' }} 
+        initialRouteName="Login"
       >
         <Stack.Group
     screenOptions={{ headerMode: 'none' }} 
@@ -38,9 +39,6 @@ export default  function App  () {
               initialParams={{ firebaseConfig }}
             />
             </Stack.Group>
-            {/* <Stack.Group
-    // screenOptions={{ headerStyle: { backgroundColor: 'transparent' } }}
-  > */}
             <Stack.Screen 
             name="CreateEvent" 
             component={CreateEvent}
@@ -78,7 +76,31 @@ export default  function App  () {
             component={UpdateEvent} 
             options={({ navigation }) => ({
               title: 'Update Event',
-              headerLeft: () =>{},
+              headerLeft: () =>{
+                const handleNavigation = () =>{
+                    Alert.alert(
+                      'Confirm Cancel',
+                      'Are you sure you want to Cancel? All Your new progress is not saved',
+                      [
+                        {
+                          text: 'Cancel',
+                          style: 'cancel',
+                        },
+                        {
+                          text: 'Confirm',
+                          style: 'destructive',
+                          onPress: () => navigation.goBack()
+                        },
+                      ],
+                      { cancelable: true }
+                    );
+                }
+                return(
+                <TouchableOpacity onPress={handleNavigation} style={{marginLeft:10}}>
+                   <Ionicons name="arrow-back" size={24} color="black" />
+                </TouchableOpacity>
+                )
+              },
               headerRight: () => (
                 <DrawerButton  />
               ),

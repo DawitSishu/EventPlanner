@@ -1,8 +1,8 @@
-import React, {useState,useEffect} from 'react'
-import {  collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import React, {useState} from 'react'
+import {  doc, updateDoc } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-import { View, TextInput, Button, StyleSheet, Text, FlatList,ActivityIndicator,TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, Text,ActivityIndicator,TouchableOpacity,Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {app} from '../config/firebaseConfig';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -56,7 +56,6 @@ export default function UpdateEvent ({route}) {
     setLoader(true);
     try {
     const eventRef = doc(firestore, 'events', eventId);
-          // Update the document fields using the 'updateDoc' method
           await updateDoc(eventRef, {
             eventName:editedEventName,
             eventDate: editedEventDate,
@@ -64,20 +63,34 @@ export default function UpdateEvent ({route}) {
             eventLocation: editedEventLocation,
             eventDescription:editedEventDescription,
           });
-          //alert msg
-          console.log('Event updated successfully');
+          Alert.alert('Success','Event updated successfully!!!');
           setLoader(false);
           navigation.goBack();
-        // fetchEventsFromFirestore();
         } catch (error) {
           //alert err
           setLoader(false);
-          console.error('Error updating event:', error);
+          Alert.alert('Error updating event:',error.message);
         }
   }; 
 
   const handleCancel = () =>{
-    navigation.goBack();
+    Alert.alert(
+      'Confirm Cancel',
+      'Are you sure you want to Cancel? All Your new progress is not saved',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          style: 'destructive',
+          onPress: () => navigation.goBack()
+        },
+      ],
+      { cancelable: true }
+    );
+    
   }
 
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList,StyleSheet,TouchableOpacity,Alert,ActivityIndicator } from 'react-native';
-import {  collection, query, where, getDocs,getDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { View, Text, FlatList,StyleSheet,TouchableOpacity,Alert,ActivityIndicator,Image } from 'react-native';
+import {  collection, query, where, getDocs,getDoc, deleteDoc, doc } from 'firebase/firestore';
 import {app} from '../config/firebaseConfig';
 import { getFirestore } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { useIsFocused } from '@react-navigation/native';
+import noEvent from '../Assets/Vector.png';
 
   
 const EventListScreen = ({route}) => {
@@ -17,12 +18,10 @@ const EventListScreen = ({route}) => {
 
   useEffect(() => {
     if (isFocused) {
-      console.log('Component is focused');
       fetchEventsFromFirestore();
     }
 
     return () => {
-      console.log('Cleanup function is running');
     };
   }, [isFocused]);
 
@@ -47,7 +46,6 @@ const EventListScreen = ({route}) => {
       setLoader(false); 
     } catch (error) {
       setLoader(false);
-      //error message
       console.error('Error fetching events:', error);
     }
   };
@@ -59,9 +57,7 @@ const EventListScreen = ({route}) => {
       const documentSnapshot = await getDoc(eventRef);
       
       if (documentSnapshot.exists()) {
-        // Document exists, you can access its data
         const documentData = documentSnapshot.data();
-        // setEdit(true);
         const data = {
           eventId,
           ...documentData
@@ -71,12 +67,10 @@ const EventListScreen = ({route}) => {
         navigation.navigate('UpdateEvent',{...data});
       } else {
         setLoader(false);
-        //err alert
-        console.log('Document does not exist.');
+        Alert.alert('Error retrieving document:', 'Document Data does not exist.'  )
       }
     } catch (error) {
-      // alert error
-      console.error('Error retrieving document:', error);
+      Alert.alert('Error retrieving document:', error.message);
     }
   };
 
@@ -86,12 +80,11 @@ const EventListScreen = ({route}) => {
       await deleteDoc(doc(firestore, 'events', eventId));
       setLoader(false);
       //alert sth
-      console.log('Event deleted:', eventId);
-      fetchEventsFromFirestore(); // Refresh events after deletion
+      Alert.alert('Success','You Event has been saved successfully!!!');
+      fetchEventsFromFirestore(); 
     } catch (error) {
       setLoader(false);
-      //alert error
-      console.error('Error deleting event:', error);
+      Alert.alert('Error deleting event:',error.message);
     }
   };
   
@@ -148,12 +141,17 @@ const EventListScreen = ({route}) => {
          <View style={styles.container}>
             <ActivityIndicator size="large" color="blue" />
           </View>  
-            ) :  ( 
+            ) : events.length > 0 ? ( 
             <FlatList
               data={events}
               renderItem={renderEventItem}
               keyExtractor={(item) => item.id}
             />
+            ) : (
+              <View style={styles.container}>
+                <Image  source={noEvent} style={{margin: 70}}/>
+                <Text style={styles.eventName}>You Have no Events Please Create One</Text>
+              </View>
             )
   );
 };

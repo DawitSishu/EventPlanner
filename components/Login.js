@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, ActivityIndicator,StyleSheet,Alert } from 'react-native';
+import { View, TextInput, ActivityIndicator,StyleSheet,Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {  TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -47,12 +47,10 @@ const LoginScreen = ({ route }) => {
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.error.message;
-        console.log('Log-In error:', errorMessage);
         Alert.alert('Log-In Error', errorMessage);
         setLoading(false);
       }
     } catch (error) {
-      console.log('Log-In error:', error.message);
       setLoading(false)
       Alert.alert('Log-In Error', error.message);
     }

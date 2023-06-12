@@ -7,8 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import {  TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
 
 
 
@@ -87,7 +85,6 @@ export default function App({route}) {
       setLoader(false)
     } catch (error) {
       setLoader(false);
-      //alert
       Alert.alert('Error adding event:', error.message);
     }
     
@@ -112,19 +109,17 @@ export default function App({route}) {
                     />
                   </View>
                         <View style={styles.dateInputContainer}>
-                        <Text style={styles.dateText}>{eventDate}</Text>
+                        <Text style={styles.dateText}>{eventDate ? eventDate : 'Select Event Date'}</Text>
                         <TouchableOpacity style={styles.dateInput}  onPress={showDatepicker} >
                         <Icon name="calendar" size={24} color="gray" />
                         </TouchableOpacity> 
                           </View>
                           <View style={styles.dateInputContainer}>
-                        <Text style={styles.dateText}>{eventTime}</Text>
+                        <Text style={styles.dateText}>{eventTime ? eventTime : 'Select Event Time'  }</Text>
                         <TouchableOpacity style={styles.dateInput}  onPress={showTimepicker} >
                         <Icon name="clock-o" size={24} color="gray" />
                         </TouchableOpacity>    
                           </View>
-                    {/* <Button onPress={showDatepicker} title="Show date picker!" />  */}
-                    {/* <Button onPress={showTimepicker} title="Show time picker!" /> */}
                     <View style={styles.inputContainer}>
                     <TextInput
                       style={styles.input}
@@ -166,7 +161,7 @@ const styles = StyleSheet.create({
   Header: {
     fontSize: 40,
     fontWeight: 'bold',
-    marginBottom:50,
+    marginBottom:20,
   },
   title:{
     fontSize: 28,
